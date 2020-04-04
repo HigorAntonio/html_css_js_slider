@@ -12,11 +12,17 @@ function resizeSlide() {
   slidesContent.map(slideContent => slideContent.style.fontSize = `${slideWidth/2}px`);
 }
 
+function slidesOnScreen() {
+  const sliderWidth = slider.offsetWidth;
+  const slideWidth = slides[0].offsetWidth;
+  return Math.round(sliderWidth/slideWidth);
+}
+
 resizeSlide();
 
 prevButton.addEventListener('click', () => {
   const maxTranslate = 0;
-  const minTranslate = -Math.ceil(slides.length / 2) * 100;
+  const minTranslate = -(slides.length - slidesOnScreen()) * 100;
 
   translate = (translate >= maxTranslate) ? minTranslate : translate + 100;
   slides.map(slide => slide.style.transform = `translate(${translate}%)`);
@@ -24,7 +30,7 @@ prevButton.addEventListener('click', () => {
 
 nextButton.addEventListener('click', () => {
   const maxTranslate = 0;
-  const minTranslate = -Math.ceil(slides.length / 2) * 100;
+  const minTranslate = -(slides.length - slidesOnScreen()) * 100;
 
   translate = (translate <= minTranslate) ? maxTranslate : translate - 100;
   slides.map(slide => slide.style.transform = `translate(${translate}%)`);
